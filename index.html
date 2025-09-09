@@ -793,7 +793,7 @@
     </div>
 
     <!-- Success Notification -->
-    <div id="success-notification" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 opacity-0 transition-all duration-300 max-w-xs w-auto">
+    <div id="success-notification" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-[9999] opacity-0 transition-all duration-300 max-w-xs w-auto">
         <div class="flex items-center justify-center space-x-2">
             <span>✅</span>
             <span class="text-sm font-medium">Produto adicionado ao carrinho!</span>
@@ -946,7 +946,7 @@
                         </div>
 
                         <button onclick="sendOrder()" class="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
-                            🚀 Enviar Pedido
+                            ✅ Finalizar Pedido
                         </button>
                     </div>
                 </div>
@@ -1624,7 +1624,7 @@
             const icon = type === 'error' ? '❌' : '✅';
             const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
             
-            notification.className = `fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 opacity-0 transition-all duration-300 max-w-xs w-auto`;
+            notification.className = `fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-[9999] opacity-0 transition-all duration-300 max-w-xs w-auto`;
             notification.innerHTML = `
                 <div class="flex items-center justify-center space-x-2">
                     <span>${icon}</span>
@@ -1982,8 +1982,13 @@
             if (selectedPaymentOption === 'money') {
                 const changeAmount = document.getElementById('change-amount').value.trim();
                 
-                if (!changeAmount || parseFloat(changeAmount) <= 0) {
-                    showNotification('Informe o valor para o troco!', 'error');
+                if (!changeAmount) {
+                    showNotification('Por favor, preencha o campo "Troco para quanto?"', 'error');
+                    return;
+                }
+                
+                if (parseFloat(changeAmount) <= 0) {
+                    showNotification('O valor do troco deve ser maior que zero!', 'error');
                     return;
                 }
             }
@@ -2135,5 +2140,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c2df546678e2bf',t:'MTc1NzM4MDkyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c2f33c4769e2bf',t:'MTc1NzM4MTczOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
