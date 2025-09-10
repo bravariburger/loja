@@ -837,7 +837,7 @@
                                 </div>
                                 <div class="flex justify-between text-sm text-gray-600">
                                     <span>Taxa de serviço:</span>
-                                    <span>R$ 0,30</span>
+                                    <span>R$ 0,10</span>
                                 </div>
                                 <div class="flex justify-between items-center text-xl font-bold border-t pt-2">
                                     <span>Total:</span>
@@ -882,9 +882,9 @@
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <span class="font-semibold">🚚 Delivery</span>
-                                            <p class="text-sm text-gray-600">O Frete não será cobrado se for no PIX</p>
+                                            <p class="text-sm text-gray-600">A taxa será calculada e enviada no WhatsApp</p>
                                         </div>
-                                        <span class="text-brand-red font-bold" id="delivery-fee-display">R$ 0,00</span>
+                                        <span class="text-brand-red font-bold" id="delivery-fee-display"></span>
                                     </div>
                                 </div>
                                 <div class="delivery-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all" onclick="selectDeliveryOption('pickup')">
@@ -966,16 +966,16 @@
 
         // Coupon database - Ative/desative cupons alterando 'active' para true/false
         const coupons = {
-            '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: true },
+            '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: false },
             '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: true },
-            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: true },
-            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: true },
-            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: true },
-            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: true }
+            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: false },
+            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: false },
+            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: false },
+            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: false }
         };
 
         // Configuração de delivery (altere aqui facilmente)
-        const DELIVERY_FEE = 5.00; // Altere para 0 para frete grátis ou outro valor
+        const DELIVERY_FEE = 0.00; // Altere para 0 para frete grátis ou outro valor
 
         // CONTROLE DE ESTOQUE - Altere para 0 (indisponível) ou 1 (disponível)
         const stockControl = {
@@ -2142,6 +2142,7 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c2f33c4769e2bf',t:'MTc1NzM4MTczOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
