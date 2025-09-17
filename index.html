@@ -31,6 +31,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            box-sizing: border-box;
         }
         
         input, textarea {
@@ -40,12 +41,22 @@
             user-select: text;
         }
         
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overscroll-behavior: none;
             -webkit-overflow-scrolling: touch;
             position: relative;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
         }
         
         body.modal-open {
@@ -130,40 +141,78 @@
             padding: 1rem;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            z-index: 50;
         }
         
         .modal-content {
             position: relative;
             width: 100%;
             max-width: 28rem;
-            max-height: 90vh;
+            max-height: 85vh;
             margin: auto;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            background: white;
+            border-radius: 1rem;
         }
         
-        @media (max-width: 768px) {
+        /* Melhorias específicas para mobile */
+        @media (max-width: 640px) {
             .modal-container {
-                padding: 0.5rem;
+                padding: 0.25rem;
                 align-items: flex-start;
-                padding-top: 2rem;
+                padding-top: 1rem;
             }
             
             .modal-content {
                 max-height: 95vh;
-                width: 100%;
-                margin-top: 0;
+                width: calc(100vw - 0.5rem);
+                margin: 0;
+                border-radius: 0.75rem;
+            }
+            
+            /* Ajustes para telas muito pequenas */
+            .product-card {
+                min-height: 200px;
+            }
+            
+            .product-card img {
+                height: 120px !important;
+            }
+            
+            .product-card .p-4 {
+                padding: 0.75rem !important;
+            }
+            
+            .product-card h3 {
+                font-size: 0.875rem !important;
+                line-height: 1.2 !important;
             }
         }
         
         @media (max-height: 600px) {
             .modal-container {
                 align-items: flex-start;
-                padding-top: 1rem;
+                padding-top: 0.5rem;
             }
             
             .modal-content {
                 max-height: 98vh;
+            }
+        }
+        
+        /* Correções para dispositivos muito pequenos */
+        @media (max-width: 360px) {
+            .grid-cols-2 {
+                gap: 0.5rem !important;
+            }
+            
+            .p-4 {
+                padding: 0.75rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem !important;
             }
         }
         
@@ -235,12 +284,46 @@
             }
         }
         
-        /* Prevenção de zoom em inputs no iOS */
+        /* Prevenção de zoom em inputs no iOS e melhor UX mobile */
         input[type="text"],
         input[type="tel"],
         input[type="number"],
         textarea {
             font-size: 16px !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #DC2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+        
+        /* Melhor experiência em telas pequenas */
+        @media (max-width: 640px) {
+            input, textarea, button {
+                min-height: 44px; /* Tamanho mínimo recomendado para touch */
+            }
+            
+            .text-2xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-lg {
+                font-size: 1.125rem !important;
+            }
         }
         
         /* Melhor experiência de toque */
@@ -308,37 +391,37 @@
 <body class="bg-gray-50">
     <!-- Header -->
     <header class="bg-brand-red text-white fixed top-0 left-0 right-0 z-40 shadow-lg">
-        <div class="max-w-4xl mx-auto flex items-center justify-between p-4">
-            <div class="flex items-center space-x-3">
+        <div class="max-w-4xl mx-auto flex items-center justify-between px-3 py-3 sm:p-4">
+            <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
                 <img src="https://github.com/bravariburger/pedir/blob/main/MYSTIC.png?raw=true" 
                      alt="Bravari Burger" 
-                     class="h-10 w-10 rounded-full flex-shrink-0"
+                     class="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex-shrink-0"
                      onerror="this.style.display='none';">
-                <h1 class="text-xl font-bold truncate">Bravari Burger</h1>
+                <h1 class="text-lg sm:text-xl font-bold truncate">Bravari Burger</h1>
             </div>
-            <div class="text-sm flex-shrink-0">
+            <div class="text-xs sm:text-sm flex-shrink-0">
                 <p>Delivery</p>
             </div>
         </div>
     </header>
 
     <!-- Categories Navigation -->
-    <nav class="bg-white shadow-sm fixed left-0 right-0 z-30 p-4" style="top: 4rem;">
+    <nav class="bg-white shadow-sm fixed left-0 right-0 z-30 px-2 py-3 sm:p-4" style="top: 3.5rem; sm:top: 4rem;">
         <div class="max-w-4xl mx-auto">
-            <div class="flex space-x-3 overflow-x-auto scrollbar-hide pb-1">
-                <button onclick="navigateToCategory('burgers')" class="category-btn active px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200">
+            <div class="flex space-x-2 sm:space-x-3 overflow-x-auto scrollbar-hide pb-1">
+                <button onclick="navigateToCategory('burgers')" class="category-btn active px-3 py-2 sm:px-4 sm:py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200 text-sm sm:text-base">
                     🍔 Burgers
                 </button>
-                <button onclick="navigateToCategory('sobremesas')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200">
+                <button onclick="navigateToCategory('sobremesas')" class="category-btn px-3 py-2 sm:px-4 sm:py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200 text-sm sm:text-base">
                     🍫 Sobremesas
                 </button>
-                <button onclick="navigateToCategory('acompanhamentos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200">
+                <button onclick="navigateToCategory('acompanhamentos')" class="category-btn px-3 py-2 sm:px-4 sm:py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200 text-sm sm:text-base">
                     🍟 Acompanhamentos
                 </button>
-                <button onclick="navigateToCategory('bebidas')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200">
+                <button onclick="navigateToCategory('bebidas')" class="category-btn px-3 py-2 sm:px-4 sm:py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200 text-sm sm:text-base">
                     🥤 Bebidas
                 </button>
-                <button onclick="navigateToCategory('combos')" class="category-btn px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200">
+                <button onclick="navigateToCategory('combos')" class="category-btn px-3 py-2 sm:px-4 sm:py-2 rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-200 text-sm sm:text-base">
                     🍔 Combos
                 </button>
             </div>
@@ -366,13 +449,13 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto p-4 pb-24" style="padding-top: 8rem;">
+    <main class="max-w-4xl mx-auto px-3 py-4 pb-24 sm:p-4 sm:pb-24" style="padding-top: 7rem; sm:padding-top: 8rem;">
         <!-- Burgers Category -->
         <section id="burgers" class="mb-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 🍔 Burgers
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('cheddar-burger-1')">
                     <div class="relative">
                         <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/1.jpg?raw=true" 
@@ -383,9 +466,9 @@
                             <span class="text-gray-500">🍔</span>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-gray-800">🍔 Cheddar Burguer</h3>
-                        <p class="text-brand-red font-bold mt-2">R$ 16,99</p>
+                    <div class="p-3 sm:p-4">
+                        <h3 class="font-semibold text-gray-800 text-sm sm:text-base leading-tight">🍔 Cheddar Burguer</h3>
+                        <p class="text-brand-red font-bold mt-1 sm:mt-2 text-sm sm:text-base">R$ 16,99</p>
                     </div>
                 </div>
 
@@ -606,7 +689,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 🍫 Sobremesas
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('brownie-chocolate')">
                     <img src="https://github.com/bravariburger/pedir/blob/main/Sobremesas/brownie.jpg?raw=true" 
                          alt="Brownie Chocolate" 
@@ -644,7 +727,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 🍟 Acompanhamentos
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('batata-p')">
                     <img src="https://github.com/bravariburger/pedir/blob/main/Batatas/batata%20frita.jpg?raw=true" 
                          alt="Batata Frita P" 
@@ -696,7 +779,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 🥤 Bebidas
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('coca-cola')">
                     <img src="https://github.com/bravariburger/pedir/blob/main/Bebidas/coca.jpg?raw=true" 
                          alt="Coca Cola 350ml" 
@@ -790,7 +873,7 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 🍔 Combos
             </h2>
-            <div class="grid grid-cols-2 gap-3 md:gap-4">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-cheddar-1')">
                     <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/1.jpg?raw=true" 
                          alt="Combo Cheddar Burguer" 
@@ -1056,9 +1139,9 @@
 
     <!-- Floating Cart Button -->
     <div id="floating-cart" class="floating-cart-fixed hidden">
-        <button onclick="openCart()" class="w-full bg-brand-red text-white py-4 px-6 rounded-full shadow-lg flex items-center justify-center space-x-2 font-semibold">
+        <button onclick="openCart()" class="w-full bg-brand-red text-white py-3 px-4 sm:py-4 sm:px-6 rounded-full shadow-lg flex items-center justify-center space-x-2 font-semibold text-sm sm:text-base">
             <span>Finalizar Pedido</span>
-            <span id="cart-count" class="bg-brand-yellow text-black px-3 py-1 rounded-full text-sm font-bold min-w-[2rem] text-center">0</span>
+            <span id="cart-count" class="bg-brand-yellow text-black px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-bold min-w-[1.5rem] sm:min-w-[2rem] text-center">0</span>
         </button>
     </div>
 
@@ -2765,5 +2848,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980bc35153a7772a',t:'MTc1ODE0NTIzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980bd0d9d4cdca9f',t:'MTc1ODE0NTc5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
