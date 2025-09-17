@@ -174,6 +174,8 @@
             right: 1rem !important;
             z-index: 50 !important;
             animation: floatingShake 3s ease-in-out infinite;
+            transform: translateZ(0); /* Força aceleração de hardware */
+            will-change: transform; /* Otimiza para animações */
         }
         
         @keyframes floatingShake {
@@ -244,6 +246,62 @@
         /* Melhor experiência de toque */
         button, .product-card, .crossell-option, .delivery-option, .payment-option {
             touch-action: manipulation;
+        }
+        
+        /* Correção para teclado virtual - força redimensionamento */
+        .viewport-fix {
+            height: 100vh;
+            height: 100dvh; /* Dynamic viewport height para navegadores modernos */
+        }
+        
+        /* Força recálculo do viewport quando teclado fecha */
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+        
+        /* Correção específica para WebKit (Safari/Chrome mobile) */
+        @supports (-webkit-appearance: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+            
+            .modal-container {
+                height: -webkit-fill-available;
+            }
+        }
+        
+        /* Estados do teclado virtual */
+        body.keyboard-open {
+            /* Quando teclado está aberto, mantém layout estável */
+            position: fixed;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        body:not(.keyboard-open) {
+            /* Quando teclado fecha, força recálculo do viewport */
+            min-height: 100vh !important;
+            min-height: 100dvh !important;
+        }
+        
+        /* Garante que o botão flutuante permaneça fixo */
+        .floating-cart-fixed {
+            position: fixed !important;
+            bottom: 1rem !important;
+            left: 1rem !important;
+            right: 1rem !important;
+            z-index: 50 !important;
+            animation: floatingShake 3s ease-in-out infinite;
+            transform: translateZ(0) !important; /* Força aceleração de hardware */
+            will-change: transform !important; /* Otimiza para animações */
+            backface-visibility: hidden; /* Previne bugs de renderização */
+        }
+        
+        /* Força o botão a permanecer no lugar durante mudanças de viewport */
+        body.keyboard-open .floating-cart-fixed {
+            position: fixed !important;
+            bottom: 1rem !important;
         }
     </style>
 </head>
@@ -2612,12 +2670,92 @@
             });
         }
 
+        // Função para detectar e corrigir problemas do teclado virtual
+        function handleVirtualKeyboard() {
+            let initialViewportHeight = window.innerHeight;
+            let currentViewportHeight = window.innerHeight;
+            
+            // Detecta mudanças no viewport (teclado abrindo/fechando)
+            function onViewportChange() {
+                currentViewportHeight = window.innerHeight;
+                
+                // Se o viewport diminuiu significativamente, teclado está aberto
+                if (currentViewportHeight < initialViewportHeight * 0.75) {
+                    document.body.classList.add('keyboard-open');
+                } else {
+                    document.body.classList.remove('keyboard-open');
+                    
+                    // Força recálculo do layout quando teclado fecha
+                    setTimeout(() => {
+                        window.scrollTo(0, window.scrollY);
+                        
+                        // Força repaint
+                        document.body.style.height = 'auto';
+                        document.body.offsetHeight; // Trigger reflow
+                        document.body.style.height = '';
+                    }, 100);
+                }
+            }
+            
+            // Escuta mudanças no viewport
+            window.addEventListener('resize', onViewportChange);
+            window.addEventListener('orientationchange', () => {
+                setTimeout(() => {
+                    initialViewportHeight = window.innerHeight;
+                    onViewportChange();
+                }, 500);
+            });
+            
+            // Detecta quando inputs ganham/perdem foco
+            document.addEventListener('focusin', function(e) {
+                if (e.target.matches('input, textarea')) {
+                    setTimeout(onViewportChange, 300);
+                }
+            });
+            
+            document.addEventListener('focusout', function(e) {
+                if (e.target.matches('input, textarea')) {
+                    setTimeout(() => {
+                        onViewportChange();
+                        
+                        // Força scroll para corrigir posição
+                        if (window.scrollY > 0) {
+                            window.scrollTo(0, window.scrollY - 1);
+                            setTimeout(() => window.scrollTo(0, window.scrollY + 1), 50);
+                        }
+                    }, 300);
+                }
+            });
+            
+            // Detecta mudanças no Visual Viewport API (mais preciso para teclado virtual)
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', () => {
+                    const heightDifference = window.innerHeight - window.visualViewport.height;
+                    
+                    if (heightDifference > 150) { // Teclado provavelmente aberto
+                        document.body.classList.add('keyboard-open');
+                    } else {
+                        document.body.classList.remove('keyboard-open');
+                        
+                        // Força recálculo quando teclado fecha
+                        setTimeout(() => {
+                            document.body.style.minHeight = '100vh';
+                            document.body.style.minHeight = '100dvh';
+                        }, 100);
+                    }
+                });
+            }
+        }
+
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             console.log('App inicializada');
             
             // Apply stock control to all products
             applyStockControl();
+            
+            // Initialize virtual keyboard handling
+            handleVirtualKeyboard();
             
             // Test navigation buttons
             document.querySelectorAll('.category-btn').forEach((btn, index) => {
@@ -2627,6 +2765,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980b71874261cad7',t:'MTc1ODE0MTg4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980bc35153a7772a',t:'MTc1ODE0NTIzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
