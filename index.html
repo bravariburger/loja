@@ -104,6 +104,7 @@
                 align-items: center !important;
                 justify-content: center !important;
                 padding: 1rem !important;
+                display: flex !important;
             }
             
             .modal-content {
@@ -111,6 +112,10 @@
                 max-height: 85vh !important;
                 width: 100% !important;
                 border-radius: 1rem !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
             }
         }
         
@@ -120,6 +125,19 @@
             left: 1rem !important;
             right: 1rem !important;
             z-index: 50 !important;
+            animation: floatingShake 3s ease-in-out infinite;
+        }
+        
+        @keyframes floatingShake {
+            0%, 90%, 100% {
+                transform: translateX(0);
+            }
+            92%, 96% {
+                transform: translateX(-2px);
+            }
+            94%, 98% {
+                transform: translateX(2px);
+            }
         }
 
         .coupon-applied {
@@ -148,23 +166,6 @@
             z-index: 10;
         }
     </style>
-        <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '809446638170174');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -206,42 +207,25 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
         </div>
     </nav>
 
-<!-- Welcome Modal -->
-<div id="welcome-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
-    <div id="welcome-content" class="bg-white rounded-2xl max-w-sm w-full shadow-2xl transform transition-all duration-500 modal-enter">
-        <div class="p-6 text-center">
-            <div class="mb-4">
-                <img src="https://github.com/bravariburger/pedir/blob/main/MYSTIC.png?raw=true" 
-                     alt="Bravari Burger" 
-                     class="h-20 w-20 mx-auto rounded-full" 
-                     onerror="this.style.display='none';">
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl transform transition-all duration-300 modal-enter">
+            <div class="p-6 text-center">
+                <div class="mb-4">
+                    <img src="https://github.com/bravariburger/pedir/blob/main/MYSTIC.png?raw=true" 
+                         alt="Bravari Burger" 
+                         class="h-20 w-20 mx-auto rounded-full"
+                         onerror="this.style.display='none';">
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
+                <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
+                <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
+                <button onclick="closeWelcomeModal()" class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
+                    Ver Cardápio 🍔
+                </button>
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
-            <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
-            <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
-            <button onclick="closeWelcomeModal()" 
-                    class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
-                Ver Cardápio 🍔
-            </button>
         </div>
     </div>
-</div>
-
-<script>
-    function closeWelcomeModal() {
-        const modal = document.getElementById("welcome-modal");
-        const content = document.getElementById("welcome-content");
-
-        // Animação de saída
-        modal.classList.add("opacity-0");
-        content.classList.add("scale-90");
-
-        // Remove o modal do DOM depois da animação
-        setTimeout(() => {
-            modal.style.display = "none";
-        }, 500); // tempo igual ao duration-500
-    }
-</script>
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto p-4 pb-24" style="padding-top: 8rem;">
@@ -296,7 +280,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('bravari-ring-4')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/9.jpg?raw=true" 
                          alt="Bravari Burguer Ring" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -352,7 +336,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('bravari-ring-duplo-8')">
-                    <img src="https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/9.jpg" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/6.jpg?raw=true" 
                          alt="Bravari Burguer Ring Duplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -366,7 +350,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('cheddar-triplo-9')">
-                    <img src="https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/12.jpg" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/13.jpg?raw=true" 
                          alt="Cheddar Burguer Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -394,7 +378,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('bravari-triplo-11')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/6.jpg?raw=true" 
                          alt="Bravari Burguer Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -408,7 +392,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('bravari-ring-triplo-12')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/8.jpg?raw=true" 
                          alt="Bravari Burguer Ring Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -422,7 +406,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('cream-cheese-13')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/11.jpg?raw=true" 
                          alt="Cream Cheese Burguer" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -436,7 +420,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('bravari-salada-14')">
-                    <img src="https://github.com/bravariburger/pedir/blob/main/fotos%20burguers%20-%20bravari%20burguer/Bravari%20Salada.jpg?raw=true" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/12.jpg?raw=true" 
                          alt="Bravari Salada" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -450,7 +434,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('vulcan-burger-15')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/10.jpg?raw=true" 
                          alt="Vulcan Burguer" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -711,6 +695,20 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                     </div>
                 </div>
 
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-ring-4')">
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/9.jpg?raw=true" 
+                         alt="Combo Bravari Burguer Ring" 
+                         class="w-full h-32 object-cover"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden bg-gray-200 h-32 items-center justify-center">
+                        <span class="text-gray-500">🍔</span>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-800">🍔 Combo Bravari Burguer Ring</h3>
+                        <p class="text-brand-red font-bold mt-2">R$ 43,99</p>
+                    </div>
+                </div>
+
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-cheddar-duplo-5')">
                     <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/4.jpg?raw=true" 
                          alt="Combo Cheddar Burguer Duplo" 
@@ -749,13 +747,13 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold text-gray-800">🍔 Combo Bravari Burguer Duplo</h3>
-                        <p class="text-brand-red font-bold mt-2">R$ 52,99</p>
+                        <p class="text-brand-red font-bold mt-2">R$ 53,99</p>
                     </div>
                 </div>
 
-                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-salada-8')">
-                    <img src="https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/combos%20JPG/9.jpg" 
-                         alt="Combo Bravari Salada" 
+                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-ring-duplo-8')">
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/6.jpg?raw=true" 
+                         alt="Combo Bravari Burguer Ring Duplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="hidden bg-gray-200 h-32 items-center justify-center">
@@ -763,12 +761,12 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold text-gray-800">🍔 Combo Bravari Burguer Ring Duplo</h3>
-                        <p class="text-brand-red font-bold mt-2">R$ 37,90</p>
+                        <p class="text-brand-red font-bold mt-2">R$ 53,99</p>
                     </div>
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-cheddar-triplo-9')">
-                    <img src="https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/12.jpg" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/13.jpg?raw=true" 
                          alt="Combo Cheddar Burguer Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -796,7 +794,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-triplo-11')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/6.jpg?raw=true" 
                          alt="Combo Bravari Burguer Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -810,7 +808,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-ring-triplo-12')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/8.jpg?raw=true" 
                          alt="Combo Bravari Burguer Ring Triplo" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -824,7 +822,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-cream-cheese-13')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/11.jpg?raw=true" 
                          alt="Combo Cream Cheese Burguer" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -852,7 +850,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
 
                 <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-vulcan-15')">
-                    <img src="no image" 
+                    <img src="https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/10.jpg?raw=true" 
                          alt="Combo Vulcan Burguer" 
                          class="w-full h-32 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -875,21 +873,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                     </div>
                     <div class="p-4">
                         <h3 class="font-semibold text-gray-800">🍔 Combo Bravari Ring Triplo</h3>
-                        <p class="text-brand-red font-bold mt-2">R$ 68,99</p>
-                    </div>
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="openProductModal('combo-bravari-ring-4')">
-                    <img src="no image" 
-                         alt="Combo Bravari Burguer Ring" 
-                         class="w-full h-32 object-cover"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="hidden bg-gray-200 h-32 items-center justify-center">
-                        <span class="text-gray-500">🍔</span>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-semibold text-gray-800">🍔 Combo Bravari Burguer Ring</h3>
-                        <p class="text-brand-red font-bold mt-2">R$ 44,99</p>
+                        <p class="text-brand-red font-bold mt-2">R$ 62,99</p>
                     </div>
                 </div>
             </div>
@@ -959,7 +943,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         
                         <!-- Cross-sell Options -->
                         <div id="crossell-section" class="mb-4 hidden">
-                            <h4 class="font-bold text-lg mb-3">🍟 Que tal adicionar?</h4>
+                            <h4 class="font-bold text-lg mb-3">🍟 Que tal aumentar?</h4>
                             <div id="crossell-options" class="space-y-2">
                                 <!-- Cross-sell options will be inserted here -->
                             </div>
@@ -968,7 +952,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <!-- Observações -->
                         <div class="mb-4">
                             <label class="block font-semibold mb-2" for="observacoes">Observações:</label>
-                            <textarea id="observacoes" class="w-full p-3 border rounded-lg resize-none" rows="3" placeholder="Alguma observação especial?" maxlength="200"></textarea>
+                            <textarea id="observacoes" class="w-full p-4 border-2 rounded-lg resize-none text-base min-h-[80px]" rows="3" placeholder="Alguma observação especial?" maxlength="200"></textarea>
                         </div>
 
                         <!-- Quantity and Add Button -->
@@ -1013,7 +997,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <!-- Coupon Section -->
                         <div class="border-t pt-4 mb-4">
                             <div class="flex gap-2 mb-2">
-                                <input type="text" id="coupon-input" placeholder="Código do cupom" class="flex-1 p-2 border rounded-lg text-sm">
+                                <input type="text" id="coupon-input" placeholder="Código do cupom" class="flex-1 p-3 border-2 rounded-lg text-base min-h-[45px]">
                                 <button onclick="applyCoupon()" class="bg-brand-red text-white px-4 py-2 rounded-lg text-sm font-semibold">
                                     Aplicar
                                 </button>
@@ -1065,8 +1049,8 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <div class="mb-6">
                             <h4 class="font-bold text-lg mb-3">👤 Seus Dados</h4>
                             <div class="space-y-3">
-                                <input type="text" id="customer-name" placeholder="Seu nome" class="w-full p-3 border rounded-lg">
-                                <input type="tel" id="customer-phone" placeholder="Seu telefone" class="w-full p-3 border rounded-lg">
+                                <input type="text" id="customer-name" placeholder="Seu nome" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]">
+                                <input type="tel" id="customer-phone" placeholder="Seu telefone" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]">
                             </div>
                         </div>
 
@@ -1078,9 +1062,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <span class="font-semibold">🚚 Delivery</span>
-                                            <p class="text-sm text-gray-600">O frete será calculado no WhatsApp</p>
+                                            <p class="text-sm text-gray-600">Taxa calculada e enviada no WhatsApp</p>
                                         </div>
-                                        <span class="text-brand-red font-bold" id="delivery-fee-display"></span>
+                                        <span class="text-green-600 font-bold" id="delivery-fee-display">Grátis</span>
                                     </div>
                                 </div>
                                 <div class="delivery-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all" onclick="selectDeliveryOption('pickup')">
@@ -1108,9 +1092,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <div id="address-section" class="mb-6 hidden">
                             <h4 class="font-bold text-lg mb-3">📍 Endereço de Entrega</h4>
                             <div class="space-y-3">
-                                <input type="text" id="address" placeholder="Rua, número" class="w-full p-3 border rounded-lg">
-                                <input type="text" id="neighborhood" placeholder="Bairro" class="w-full p-3 border rounded-lg">
-                                <input type="text" id="reference" placeholder="Ponto de referência (opcional)" class="w-full p-3 border rounded-lg">
+                                <input type="text" id="address" placeholder="Rua, número" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]">
+                                <input type="text" id="neighborhood" placeholder="Bairro" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]">
+                                <input type="text" id="reference" placeholder="Ponto de referência (opcional)" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]">
                             </div>
                         </div>
 
@@ -1118,7 +1102,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <div id="table-section" class="mb-6 hidden">
                             <h4 class="font-bold text-lg mb-3">🍽️ Número da Mesa</h4>
                             <div class="space-y-3">
-                                <input type="number" id="table-number" placeholder="Digite o número da sua mesa" class="w-full p-3 border rounded-lg" min="1" max="99">
+                                <input type="number" id="table-number" placeholder="Digite o número da sua mesa" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]" min="1" max="99">
                                 <p class="text-sm text-gray-600">Informe o número da mesa onde você está sentado</p>
                             </div>
                         </div>
@@ -1148,7 +1132,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                         <!-- Change for money payment -->
                         <div id="change-section" class="mb-6 hidden">
                             <label class="block font-semibold mb-2">Troco para quanto? *</label>
-                            <input type="number" id="change-amount" placeholder="Ex: 50,00" class="w-full p-3 border rounded-lg" step="0.01" required>
+                            <input type="number" id="change-amount" placeholder="Ex: 50,00" class="w-full p-4 border-2 rounded-lg text-base min-h-[50px]" step="0.01" required>
                         </div>
 
                         <!-- Order Summary -->
@@ -1180,16 +1164,16 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
 
         // Coupon database - Ative/desative cupons alterando 'active' para true/false
         const coupons = {
-            '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: false },
-            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: false },
-            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: false },
-            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: false },
-            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: false },
-            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: false }
+            '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: true },
+            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: true },
+            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: true },
+            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: true },
+            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: true },
+            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: true }
         };
 
         // Configuração de delivery (altere aqui facilmente)
-        const DELIVERY_FEE = ; // Altere para 0 para frete grátis ou outro valor como = 5.55;
+        const DELIVERY_FEE = 0.00; // Altere para 0 para frete grátis ou outro valor
 
         // CONTROLE DE ESTOQUE - Altere para 0 (indisponível) ou 1 (disponível)
         const stockControl = {
@@ -1206,9 +1190,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'bravari-bacon-triplo-10': 1,
             'bravari-triplo-11': 1,
             'bravari-ring-triplo-12': 1,
-            'cream-cheese-13': 0,
+            'cream-cheese-13': 1,
             'bravari-salada-14': 1,
-            'vulcan-burger-15': 0,
+            'vulcan-burger-15': 1,
             'bravari-ring-triplo-16': 1,
             
             // Sobremesas
@@ -1224,9 +1208,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'coca-cola': 1,
             'coca-zero': 1,
             'guarana-antartica': 1,
-            'guarana-1l': 0,
-            'coca-2l': 0,
-            'coca-zero-2l': 0,
+            'guarana-1l': 1,
+            'coca-2l': 1,
+            'coca-zero-2l': 1,
             
             // Combos
             'combo-cheddar-1': 1,
@@ -1241,29 +1225,31 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'combo-bravari-bacon-triplo-10': 1,
             'combo-bravari-triplo-11': 1,
             'combo-bravari-ring-triplo-12': 1,
-            'combo-cream-cheese-13': 0,
+            'combo-cream-cheese-13': 1,
             'combo-bravari-salada-14': 1,
-            'combo-vulcan-15': 0,
+            'combo-vulcan-15': 1,
             'combo-bravari-ring-triplo-16': 1,
             
             // Cross-sell items
             'batata-frita-p': 1,
             'batata-frita-m': 1,
             'batata-frita-g': 1,
-            'guarana-1l': 0,
-            'coca-2l': 0,
-            'coca-zero-2l': 0,
+            'guarana-1l': 1,
+            'coca-2l': 1,
+            'coca-zero-2l': 1
         };
 
         // Cross-sell options
         const crossSellOptions = {
             'batata-frita-p': { name: '🍟 Batata Frita P', price: 12.99, category: 'batata', code: 'BTTP' },
-            'batata-frita-m': { name: '🍟 Batata Frita M', price: 17.99, category: 'batata', code: 'BTTM' },
-            'batata-frita-g': { name: '🍟 Batata Frita G', price: 25.99, category: 'batata', code: 'BTTG' },
+            'batata-frita-m': { name: '🍟 Batata Frita M', price: 5.00, category: 'batata', code: 'BTTM' },
+            'batata-frita-g': { name: '🍟 Batata Frita G', price: 7.00, category: 'batata', code: 'BTTG' },
             'coca-cola': { name: '🥤 Coca Cola 350ml', price: 6.50, category: 'bebida', code: 'CC' },
             'coca-zero': { name: '🥤 Coca Cola Zero 350ml', price: 6.50, category: 'bebida', code: 'CCZ' },
             'guarana-antartica': { name: '🥤 Guaraná Antártica 350ml', price: 6.50, category: 'bebida', code: 'GUAA' },
             'guarana-1l': { name: '🥤 Guaraná Antártica 1L', price: 8.99, category: 'bebida', code: 'GUAA1L' },
+            'coca-2l': { name: '🥤 Coca Cola 2L', price: 12.99, category: 'bebida', code: 'CC2L' },
+            'coca-zero-2l': { name: '🥤 Coca Cola Zero 2L', price: 12.99, category: 'bebida', code: 'CCZ2L' }
         };
 
         // Product database
@@ -1275,7 +1261,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '1',
                 description: 'Delicioso burger com queijo cheddar derretido, alface, tomate e molho especial',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/1.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'cheddar-bacon-burger-2': {
                 name: '🍔 Cheddar Bacon Burguer',
@@ -1283,7 +1269,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '2',
                 description: 'Burger com cheddar cremoso e bacon crocante, alface, tomate e molho especial',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/2.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-burger-3': {
                 name: '🍔 Bravari Burguer',
@@ -1291,15 +1277,15 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '3',
                 description: 'Nosso burger especial da casa com ingredientes selecionados',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/3.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-ring-4': {
                 name: '🍔 Bravari Burguer Ring',
                 price: 24.99,
                 code: '4',
                 description: 'Burger especial com onion rings crocantes',
-                image: 'no image',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/9.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'cheddar-duplo-5': {
                 name: '🍔 Cheddar Burguer Duplo',
@@ -1307,7 +1293,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '5',
                 description: 'Dupla dose de sabor com cheddar cremoso',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/4.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'cheddar-bacon-duplo-6': {
                 name: '🍔 Cheddar Bacon Burguer Duplo',
@@ -1315,7 +1301,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '6',
                 description: 'Duplo prazer com cheddar e bacon crocante',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/5.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-duplo-7': {
                 name: '🍔 Bravari Burguer Duplo',
@@ -1323,23 +1309,23 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '7',
                 description: 'Versão dupla do nosso especial da casa',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/6.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-ring-duplo-8': {
                 name: '🍔 Bravari Burguer Ring Duplo',
                 price: 34.99,
                 code: '8',
                 description: 'Versão dupla do burger com onion rings crocantes',
-                image: 'https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/9.jpg',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/6.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'cheddar-triplo-9': {
                 name: '🍔 Cheddar Burguer Triplo',
                 price: 39.99,
                 code: '9',
                 description: 'Tripla dose de cheddar cremoso',
-                image: 'https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/12.jpg',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/13.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-bacon-triplo-10': {
                 name: '🍔 Bravari Bacon Triplo',
@@ -1347,47 +1333,47 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '10',
                 description: 'Tripla dose de sabor com bacon crocante',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/7.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-triplo-11': {
                 name: '🍔 Bravari Burguer Triplo',
                 price: 44.99,
                 code: '11',
                 description: 'Versão tripla do nosso especial da casa',
-                image: 'no image',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/6.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-ring-triplo-12': {
                 name: '🍔 Bravari Burguer Ring Triplo',
                 price: 44.99,
                 code: '12',
                 description: 'Triplo burger com onion rings crocantes',
-                image: 'no image',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/8.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'cream-cheese-13': {
                 name: '🍔 Cream Cheese Burguer',
                 price: 19.99,
                 code: '13',
                 description: 'Burger cremoso com cream cheese especial',
-                image: 'no image',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/11.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-salada-14': {
                 name: '🍔 Bravari Salada',
                 price: 18.99,
                 code: '14',
                 description: 'Burger saudável com salada fresca',
-                image: 'https://github.com/bravariburger/pedir/blob/main/fotos%20burguers%20-%20bravari%20burguer/Bravari%20Salada.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/12.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'vulcan-burger-15': {
                 name: '🍔 Vulcan Burguer',
                 price: 39.99,
                 code: '15',
                 description: 'Burger picante com molho especial vulcan',
-                image: 'no image',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/10.jpg?raw=true',
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
             'bravari-ring-triplo-16': {
                 name: '🍔 Bravari Ring Triplo',
@@ -1395,7 +1381,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 code: '16',
                 description: 'Triplo burger especial com onion rings',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/burguers%20JPG/8.jpg?raw=true',
-                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica', 'guarana-1l', 'coca-2l', 'coca-zero-2l']
+                crossSells: ['batata-frita-p', 'batata-frita-m', 'batata-frita-g', 'coca-cola', 'coca-zero', 'guarana-antartica']
             },
 
             // Sobremesas
@@ -1523,10 +1509,10 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             },
             'combo-bravari-ring-4': {
                 name: '🍔 Combo Bravari Burguer Ring',
-                price: 44.99,
+                price: 43.99,
                 code: 'C4',
                 description: 'Bravari Burguer Ring + Batata Frita P + Refrigerante 350ml',
-                image: 'no image',
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/9.jpg?raw=true',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -1562,7 +1548,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             },
             'combo-bravari-duplo-7': {
                 name: '🍔 Combo Bravari Burguer Duplo',
-                price: 52.99,
+                price: 53.99,
                 code: 'C7',
                 description: 'Bravari Burguer Duplo + Batata Frita P + Refrigerante 350ml',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/6.jpg?raw=true',
@@ -1578,7 +1564,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 price: 53.99,
                 code: 'C8',
                 description: 'Bravari Burguer Ring Duplo + Batata Frita P + Refrigerante 350ml',
-                image: 'https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/combos%20JPG/9.jpg',
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/6.jpg?raw=true',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -1591,7 +1577,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 price: 58.99,
                 code: 'C9',
                 description: 'Cheddar Burguer Triplo + Batata Frita P + Refrigerante 350ml',
-                image: 'https://raw.githubusercontent.com/bravariburger/inaugura-o/refs/heads/main/burguers%20JPG/12.jpg',
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/13.jpg?raw=true',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -1617,7 +1603,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 price: 68.99,
                 code: 'C11',
                 description: 'Bravari Burguer Triplo + Batata Frita P + Refrigerante 350ml',
-                image: 'no image',
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/6.jpg?raw=true',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -1630,7 +1616,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 price: 68.99,
                 code: 'C12',
                 description: 'Bravari Burguer Ring Triplo + Batata Frita P + Refrigerante 350ml',
-                image: 'no image',
+                image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/8.jpg?raw=true',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -1679,23 +1665,10 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             },
             'combo-bravari-ring-triplo-16': {
                 name: '🍔 Combo Bravari Ring Triplo',
-                price: 68.99,
+                price: 62.99,
                 code: 'C16',
                 description: 'Bravari Ring Triplo + Batata Frita P + Refrigerante 350ml',
                 image: 'https://github.com/bravariburger/inaugura-o/blob/main/combos%20JPG/8.jpg?raw=true',
-                isCombo: true,
-                upgradeOptions: [
-                    { name: '🍟 Batata Frita P', price: 0, selected: true },
-                    { name: '🍟 Batata Frita M', price: 5.00 },
-                    { name: '🍟 Batata Frita G', price: 7.00 }
-                ]
-            },
-            'combo-bravari-ring-4': {
-                name: '🍔 Combo Bravari Burguer Ring',
-                price: 43.99,
-                code: 'C4',
-                description: 'Bravari Burguer Ring + Batata Frita P + Refrigerante 350ml',
-                image: 'no image',
                 isCombo: true,
                 upgradeOptions: [
                     { name: '🍟 Batata Frita P', price: 0, selected: true },
@@ -2542,21 +2515,5 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9804a01602532446',t:'MTc1ODA3MDM5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980b20d8b4a16d46',t:'MTc1ODEzODU4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
