@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="theme-color" content="#DC2626">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -27,6 +27,17 @@
         * {
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         
         body {
@@ -34,6 +45,14 @@
             -moz-osx-font-smoothing: grayscale;
             overscroll-behavior: none;
             -webkit-overflow-scrolling: touch;
+            position: relative;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
         
         .scrollbar-hide {
@@ -99,23 +118,52 @@
             background-color: rgba(220, 38, 38, 0.05) !important;
         }
         
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 28rem;
+            max-height: 90vh;
+            margin: auto;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
         @media (max-width: 768px) {
             .modal-container {
-                align-items: center !important;
-                justify-content: center !important;
-                padding: 1rem !important;
-                display: flex !important;
+                padding: 0.5rem;
+                align-items: flex-start;
+                padding-top: 2rem;
             }
             
             .modal-content {
-                margin: 0 !important;
-                max-height: 85vh !important;
-                width: 100% !important;
-                border-radius: 1rem !important;
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                transform: none !important;
+                max-height: 95vh;
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .modal-container {
+                align-items: flex-start;
+                padding-top: 1rem;
+            }
+            
+            .modal-content {
+                max-height: 98vh;
             }
         }
         
@@ -164,6 +212,38 @@
             font-size: 0.875rem;
             font-weight: bold;
             z-index: 10;
+        }
+        
+        /* Melhorias para dispositivos móveis */
+        @supports (-webkit-touch-callout: none) {
+            .modal-container {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* Correção para teclado virtual no iOS */
+        @media screen and (max-height: 500px) {
+            .modal-content {
+                max-height: 100vh;
+            }
+            
+            .modal-container {
+                padding: 0.25rem;
+                align-items: flex-start;
+            }
+        }
+        
+        /* Prevenção de zoom em inputs no iOS */
+        input[type="text"],
+        input[type="tel"],
+        input[type="number"],
+        textarea {
+            font-size: 16px !important;
+        }
+        
+        /* Melhor experiência de toque */
+        button, .product-card, .crossell-option, .delivery-option, .payment-option {
+            touch-action: manipulation;
         }
     </style>
 </head>
@@ -943,7 +1023,6 @@
                         
                         <!-- Cross-sell Options -->
                         <div id="crossell-section" class="mb-4 hidden">
-                            <h4 class="font-bold text-lg mb-3">🍟 Que tal aumentar?</h4>
                             <div id="crossell-options" class="space-y-2">
                                 <!-- Cross-sell options will be inserted here -->
                             </div>
@@ -1242,8 +1321,8 @@
         // Cross-sell options
         const crossSellOptions = {
             'batata-frita-p': { name: '🍟 Batata Frita P', price: 12.99, category: 'batata', code: 'BTTP' },
-            'batata-frita-m': { name: '🍟 Batata Frita M', price: 5.00, category: 'batata', code: 'BTTM' },
-            'batata-frita-g': { name: '🍟 Batata Frita G', price: 7.00, category: 'batata', code: 'BTTG' },
+            'batata-frita-m': { name: '🍟 Batata Frita M', price: 17.99, category: 'batata', code: 'BTTM' },
+            'batata-frita-g': { name: '🍟 Batata Frita G', price: 25.99, category: 'batata', code: 'BTTG' },
             'coca-cola': { name: '🥤 Coca Cola 350ml', price: 6.50, category: 'bebida', code: 'CC' },
             'coca-zero': { name: '🥤 Coca Cola Zero 350ml', price: 6.50, category: 'bebida', code: 'CCZ' },
             'guarana-antartica': { name: '🥤 Guaraná Antártica 350ml', price: 6.50, category: 'bebida', code: 'GUAA' },
@@ -1788,6 +1867,12 @@
                 crossellSection.classList.remove('hidden');
                 crossellOptions.innerHTML = '';
                 
+                // Título específico para combos
+                const upgradeTitle = document.createElement('h4');
+                upgradeTitle.className = 'font-bold text-lg mb-3';
+                upgradeTitle.innerHTML = '🍟 Que tal aumentar?';
+                crossellOptions.appendChild(upgradeTitle);
+                
                 currentProduct.upgradeOptions.forEach((option, index) => {
                     const optionElement = document.createElement('div');
                     optionElement.className = `crossell-option border-2 ${option.selected ? 'border-brand-red bg-red-50' : 'border-gray-200'} rounded-lg p-3 cursor-pointer transition-all mb-2`;
@@ -1815,27 +1900,32 @@
             crossellSection.classList.remove('hidden');
             crossellOptions.innerHTML = '';
             
+            // Título específico para hambúrgueres
+            const addTitle = document.createElement('h4');
+            addTitle.className = 'font-bold text-lg mb-3';
+            addTitle.innerHTML = '🍟 Que tal adicionar?';
+            crossellOptions.appendChild(addTitle);
+            
             // Separar batatas e bebidas
             const batatas = currentProduct.crossSells.filter(id => id.includes('batata'));
             const bebidas = currentProduct.crossSells.filter(id => !id.includes('batata'));
             
             // Adicionar seção de batatas
             if (batatas.length > 0) {
-                const batatasTitle = document.createElement('h5');
-                batatasTitle.className = 'font-semibold mb-2 text-orange-600';
-                batatasTitle.innerHTML = '🍟 Batatas';
-                crossellOptions.appendChild(batatasTitle);
-                
                 batatas.forEach(crossSellId => {
                     const crossSell = crossSellOptions[crossSellId];
                     if (crossSell && stockControl[crossSellId] === 1) {
                         const optionElement = document.createElement('div');
                         optionElement.className = 'crossell-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all mb-2';
                         optionElement.onclick = () => toggleCrossSell(crossSellId);
+                        
+                        // Para hambúrgueres, mostrar nome simplificado e preço normal
+                        const simpleName = crossSell.name.replace('🍟 ', '');
+                        
                         optionElement.innerHTML = `
                             <div class="flex items-center justify-between">
-                                <span class="font-medium">${crossSell.name}</span>
-                                <span class="text-brand-red font-bold">+R$ ${crossSell.price.toFixed(2).replace('.', ',')}</span>
+                                <span class="font-medium">${simpleName}</span>
+                                <span class="text-brand-red font-bold">R$ ${crossSell.price.toFixed(2).replace('.', ',')}</span>
                             </div>
                         `;
                         crossellOptions.appendChild(optionElement);
@@ -1859,7 +1949,7 @@
                         optionElement.innerHTML = `
                             <div class="flex items-center justify-between">
                                 <span class="font-medium">${crossSell.name}</span>
-                                <span class="text-brand-red font-bold">+R$ ${crossSell.price.toFixed(2).replace('.', ',')}</span>
+                                <span class="text-brand-red font-bold">R$ ${crossSell.price.toFixed(2).replace('.', ',')}</span>
                             </div>
                         `;
                         crossellOptions.appendChild(optionElement);
@@ -1934,8 +2024,15 @@
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
+                // Salvar posição atual do scroll
+                const scrollY = window.scrollY;
+                document.body.style.top = `-${scrollY}px`;
+                
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('modal-open');
+                
+                // Prevenir scroll no fundo em dispositivos móveis
+                document.addEventListener('touchmove', preventScroll, { passive: false });
             }
         }
 
@@ -1943,7 +2040,22 @@
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = '';
+                document.body.classList.remove('modal-open');
+                
+                // Restaurar posição do scroll
+                const scrollY = document.body.style.top;
+                document.body.style.top = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                
+                // Remover prevenção de scroll
+                document.removeEventListener('touchmove', preventScroll);
+            }
+        }
+        
+        function preventScroll(e) {
+            // Permitir scroll apenas dentro dos modais
+            if (!e.target.closest('.modal-content')) {
+                e.preventDefault();
             }
         }
 
@@ -2515,5 +2627,6 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980b20d8b4a16d46',t:'MTc1ODEzODU4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'980b71874261cad7',t:'MTc1ODE0MTg4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
