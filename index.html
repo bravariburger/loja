@@ -218,7 +218,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
                 <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
-                <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
+                <p class="text-gray-600 mb-6">FRETE GRÁTIS para pedidos a 300 metros da Loja!</p>
                 <button onclick="closeWelcomeModal()" class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
                     Ver Cardápio 🍔
                 </button>
@@ -1131,9 +1131,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <span class="font-semibold">🚚 Delivery</span>
-                                            <p class="text-sm text-gray-600">Entregamos na sua casa</p>
+                                            <p class="text-sm text-gray-600">A taxa de entrega sera calculada no WhatsApp</p>
                                         </div>
-                                        <span class="text-brand-red font-bold" id="delivery-fee-display">R$ 5,00</span>
+                                        <span class="text-brand-red font-bold" id="delivery-fee-display">Taxa</span>
                                     </div>
                                 </div>
                                 <div class="delivery-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all" onclick="selectDeliveryOption('pickup')">
@@ -1216,15 +1216,15 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
         // Coupon database - Ative/desative cupons alterando 'active' para true/false
         const coupons = {
             '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: true },
-            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: true },
-            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: true },
-            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: true },
-            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: true },
-            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: true }
+            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: false },
+            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: false },
+            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: false },
+            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: false },
+            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: false }
         };
 
         // Configuração de delivery (altere aqui facilmente)
-        const DELIVERY_FEE = 5.00; // Altere para 0 para frete grátis ou outro valor
+        const DELIVERY_FEE = 0.00; // Altere para 0 para frete grátis ou outro valor
 
         // CONTROLE DE ESTOQUE - Altere para 0 (indisponível) ou 1 (disponível)
         const stockControl = {
@@ -1241,9 +1241,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'bravari-bacon-triplo-10': 1,
             'bravari-triplo-11': 1,
             'bravari-ring-triplo-12': 1,
-            'cream-cheese-13': 1,
+            'cream-cheese-13': 0,
             'bravari-salada-14': 1,
-            'vulcan-burger-15': 1,
+            'vulcan-burger-15': 0,
             'bravari-ring-triplo-16': 1,
             
             // Sobremesas
@@ -1259,9 +1259,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'coca-cola': 1,
             'coca-zero': 1,
             'guarana-antartica': 1,
-            'guarana-1l': 1,
-            'coca-2l': 1,
-            'coca-zero-2l': 1,
+            'guarana-1l': 0,
+            'coca-2l': 0,
+            'coca-zero-2l': 0,
             
             // Combos
             'combo-cheddar-1': 1,
@@ -1276,18 +1276,18 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'combo-bravari-bacon-triplo-10': 1,
             'combo-bravari-triplo-11': 1,
             'combo-bravari-ring-triplo-12': 1,
-            'combo-cream-cheese-13': 1,
+            'combo-cream-cheese-13': 0,
             'combo-bravari-salada-14': 1,
-            'combo-vulcan-15': 1,
+            'combo-vulcan-15': 0,
             'combo-bravari-ring-triplo-16': 1,
             
             // Cross-sell items
             'batata-frita-p': 1,
             'batata-frita-m': 1,
             'batata-frita-g': 1,
-            'guarana-1l': 1,
-            'coca-2l': 1,
-            'coca-zero-2l': 1
+            'guarana-1l': 0,
+            'coca-2l': 0,
+            'coca-zero-2l': 0,
         };
 
         // Cross-sell options
@@ -2556,3 +2556,4 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9804559b27223214',t:'MTc1ODA2NzM0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
