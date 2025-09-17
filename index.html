@@ -206,22 +206,42 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
         </div>
     </nav>
 
-    <!-- Welcome Modal -->
-    <div id="welcomemodal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl transform transition-all duration-300 modal-enter">
-            <div class="p-6 text-center">
-                <div class="mb-4">
-                    <img src="https://github.com/bravariburger/pedir/blob/main/MYSTIC.png?raw=true" alt="Bravari Burger" class="h-20 w-20 mx-auto rounded-full" onerror="this.style.display='none';">
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
-                <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
-                <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
-                <button onclick="welcomemodal()" class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
-                    Ver Cardápio 🍔
-                </button>
+<!-- Welcome Modal -->
+<div id="welcome-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+    <div id="welcome-content" class="bg-white rounded-2xl max-w-sm w-full shadow-2xl transform transition-all duration-500 modal-enter">
+        <div class="p-6 text-center">
+            <div class="mb-4">
+                <img src="https://github.com/bravariburger/pedir/blob/main/MYSTIC.png?raw=true" 
+                     alt="Bravari Burger" 
+                     class="h-20 w-20 mx-auto rounded-full" 
+                     onerror="this.style.display='none';">
             </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
+            <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
+            <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
+            <button onclick="closeWelcomeModal()" 
+                    class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
+                Ver Cardápio 🍔
+            </button>
         </div>
     </div>
+</div>
+
+<script>
+    function closeWelcomeModal() {
+        const modal = document.getElementById("welcome-modal");
+        const content = document.getElementById("welcome-content");
+
+        // Animação de saída
+        modal.classList.add("opacity-0");
+        content.classList.add("scale-90");
+
+        // Remove o modal do DOM depois da animação
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 500); // tempo igual ao duration-500
+    }
+</script>
 
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto p-4 pb-24" style="padding-top: 8rem;">
@@ -2524,6 +2544,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9804a01602532446',t:'MTc1ODA3MDM5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
 
