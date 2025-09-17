@@ -218,7 +218,7 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 </div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Bem-vindo ao</h2>
                 <h1 class="text-3xl font-bold text-brand-red mb-4">Bravari Burger</h1>
-                <p class="text-gray-600 mb-6">FRETE GRÁTIS para pedidos a 300 metros da Loja!</p>
+                <p class="text-gray-600 mb-6">Descubra nossos deliciosos burgers artesanais feitos com ingredientes frescos e selecionados!</p>
                 <button onclick="closeWelcomeModal()" class="w-full bg-brand-red text-white py-3 px-6 rounded-lg font-semibold hover:bg-red-700 transition-colors">
                     Ver Cardápio 🍔
                 </button>
@@ -1131,9 +1131,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                                     <div class="flex items-center justify-between">
                                         <div>
                                             <span class="font-semibold">🚚 Delivery</span>
-                                            <p class="text-sm text-gray-600">A taxa de entrega sera calculada no WhatsApp</p>
+                                            <p class="text-sm text-gray-600">Entregamos na sua casa</p>
                                         </div>
-                                        <span class="text-brand-red font-bold" id="delivery-fee-display">Taxa</span>
+                                        <span class="text-brand-red font-bold" id="delivery-fee-display">R$ 5,00</span>
                                     </div>
                                 </div>
                                 <div class="delivery-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all" onclick="selectDeliveryOption('pickup')">
@@ -1141,6 +1141,15 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                                         <div>
                                             <span class="font-semibold">🏪 Retirada</span>
                                             <p class="text-sm text-gray-600">Retire no balcão</p>
+                                        </div>
+                                        <span class="text-green-600 font-bold">Grátis</span>
+                                    </div>
+                                </div>
+                                <div class="delivery-option border-2 border-gray-200 rounded-lg p-3 cursor-pointer transition-all" onclick="selectDeliveryOption('dine-in')">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <span class="font-semibold">🍽️ Comer no Local</span>
+                                            <p class="text-sm text-gray-600">Servimos na sua mesa</p>
                                         </div>
                                         <span class="text-green-600 font-bold">Grátis</span>
                                     </div>
@@ -1155,6 +1164,15 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                                 <input type="text" id="address" placeholder="Rua, número" class="w-full p-3 border rounded-lg">
                                 <input type="text" id="neighborhood" placeholder="Bairro" class="w-full p-3 border rounded-lg">
                                 <input type="text" id="reference" placeholder="Ponto de referência (opcional)" class="w-full p-3 border rounded-lg">
+                            </div>
+                        </div>
+
+                        <!-- Table Number (only for dine-in) -->
+                        <div id="table-section" class="mb-6 hidden">
+                            <h4 class="font-bold text-lg mb-3">🍽️ Número da Mesa</h4>
+                            <div class="space-y-3">
+                                <input type="number" id="table-number" placeholder="Digite o número da sua mesa" class="w-full p-3 border rounded-lg" min="1" max="99">
+                                <p class="text-sm text-gray-600">Informe o número da mesa onde você está sentado</p>
                             </div>
                         </div>
 
@@ -1216,15 +1234,15 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
         // Coupon database - Ative/desative cupons alterando 'active' para true/false
         const coupons = {
             '10OFF': { discount: 0.10, description: '10% de desconto', type: 'percentage', active: true },
-            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: false },
-            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: false },
-            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: false },
-            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: false },
-            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: false }
+            '15OFF': { discount: 0.15, description: '15% de desconto', type: 'percentage', active: true },
+            '20OFF': { discount: 0.20, description: '20% de desconto', type: 'percentage', active: true },
+            '30OFF': { discount: 0.30, description: '30% de desconto', type: 'percentage', active: true },
+            'FRETEFREE': { discount: 0, description: 'Frete grátis', type: 'free_delivery', active: true },
+            'BEBIDAFREE': { discount: 7.00, description: 'Bebida grátis', type: 'free_drink', active: true }
         };
 
         // Configuração de delivery (altere aqui facilmente)
-        const DELIVERY_FEE = 0.00; // Altere para 0 para frete grátis ou outro valor
+        const DELIVERY_FEE = 5.00; // Altere para 0 para frete grátis ou outro valor
 
         // CONTROLE DE ESTOQUE - Altere para 0 (indisponível) ou 1 (disponível)
         const stockControl = {
@@ -1241,9 +1259,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'bravari-bacon-triplo-10': 1,
             'bravari-triplo-11': 1,
             'bravari-ring-triplo-12': 1,
-            'cream-cheese-13': 0,
+            'cream-cheese-13': 1,
             'bravari-salada-14': 1,
-            'vulcan-burger-15': 0,
+            'vulcan-burger-15': 1,
             'bravari-ring-triplo-16': 1,
             
             // Sobremesas
@@ -1259,9 +1277,9 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'coca-cola': 1,
             'coca-zero': 1,
             'guarana-antartica': 1,
-            'guarana-1l': 0,
-            'coca-2l': 0,
-            'coca-zero-2l': 0,
+            'guarana-1l': 1,
+            'coca-2l': 1,
+            'coca-zero-2l': 1,
             
             // Combos
             'combo-cheddar-1': 1,
@@ -1276,18 +1294,18 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             'combo-bravari-bacon-triplo-10': 1,
             'combo-bravari-triplo-11': 1,
             'combo-bravari-ring-triplo-12': 1,
-            'combo-cream-cheese-13': 0,
+            'combo-cream-cheese-13': 1,
             'combo-bravari-salada-14': 1,
-            'combo-vulcan-15': 0,
+            'combo-vulcan-15': 1,
             'combo-bravari-ring-triplo-16': 1,
             
             // Cross-sell items
             'batata-frita-p': 1,
             'batata-frita-m': 1,
             'batata-frita-g': 1,
-            'guarana-1l': 0,
-            'coca-2l': 0,
-            'coca-zero-2l': 0,
+            'guarana-1l': 1,
+            'coca-2l': 1,
+            'coca-zero-2l': 1
         };
 
         // Cross-sell options
@@ -2316,12 +2334,19 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             });
             event.currentTarget.classList.add('selected');
             
-            // Show/hide address section
+            // Show/hide sections based on option
             const addressSection = document.getElementById('address-section');
+            const tableSection = document.getElementById('table-section');
+            
             if (option === 'delivery') {
                 addressSection.classList.remove('hidden');
+                tableSection.classList.add('hidden');
+            } else if (option === 'dine-in') {
+                addressSection.classList.add('hidden');
+                tableSection.classList.remove('hidden');
             } else {
                 addressSection.classList.add('hidden');
+                tableSection.classList.add('hidden');
             }
             
             updateCheckoutModal();
@@ -2374,6 +2399,20 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 }
             }
             
+            if (selectedDeliveryOption === 'dine-in') {
+                const tableNumber = document.getElementById('table-number').value.trim();
+                
+                if (!tableNumber) {
+                    showNotification('Por favor, informe o número da mesa!', 'error');
+                    return;
+                }
+                
+                if (parseInt(tableNumber) < 1 || parseInt(tableNumber) > 99) {
+                    showNotification('Número da mesa deve estar entre 1 e 99!', 'error');
+                    return;
+                }
+            }
+            
             if (selectedPaymentOption === 'money') {
                 const changeAmount = document.getElementById('change-amount').value.trim();
                 
@@ -2402,6 +2441,10 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
                 message += `🚚 *DELIVERY*\n`;
                 message += `📍 *Endereço:*\n${address}\n${neighborhood}\n`;
                 if (reference) message += `Referência: ${reference}\n`;
+            } else if (selectedDeliveryOption === 'dine-in') {
+                const tableNumber = document.getElementById('table-number').value.trim();
+                message += `🍽️ *COMER NO LOCAL*\n`;
+                message += `🪑 *Mesa:* ${tableNumber}\n`;
             } else {
                 message += `🏪 *RETIRADA NO BALCÃO*\n`;
             }
@@ -2554,6 +2597,5 @@ src="https://www.facebook.com/tr?id=809446638170174&ev=PageView&noscript=1"
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9804559b27223214',t:'MTc1ODA2NzM0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9804a01602532446',t:'MTc1ODA3MDM5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
